@@ -127,7 +127,7 @@ route.get('/createTable', (req, res) => {
 route.post('/register', (req, res) => {
     const { email, password, password1, surname, othername, username, address, phone_number } = req.body;
 
-    db.query('SELECT email FROM fasttrac.users WHERE email = ?', [email], async (error, result) => {
+    db.query('SELECT email FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [email], async (error, result) => {
         if (error) { console.log("Customized Error ", error); }
         if (result.length > 0) {
             return res.status(401).json({
@@ -259,7 +259,7 @@ route.get('/dashboard', (req, res) => {
     if (!userCookie) {
         res.redirect('/login');
     } else {
-        const user = db.query('SELECT * FROM fasttrac.users WHERE email = ?', [userData.email], async (error, result) => {
+        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [userData.email], async (error, result) => {
 
             console.log('This is the dashboard Details : ', userData);
             if (error) {
@@ -282,7 +282,7 @@ route.get('/profile', UserLoggin, (req, res) => {
     if (!userCookie) {
         res.redirect('/login');
     } else {
-        const user = db.query('SELECT * FROM fasttrac.users WHERE email = ?', [userData.email], async (error, result) => {
+        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [userData.email], async (error, result) => {
 
             // console.log('This is the dashboard Details : ', userData);
             if (error) {
@@ -332,6 +332,8 @@ route.get('/shipment', UserLoggin, (req, res) => {
 
     res.render('shipment-form', { userData, })
 })
+
+
 // To Post shipment form from the frontend 
 route.post('/shipmen', UserLoggin, (req,res)=>{
     const userCookie = req.cookies.user ? JSON.parse(req.cookies.user) : null;
@@ -345,7 +347,7 @@ route.post('/shipmen', UserLoggin, (req,res)=>{
     let receiver_address = receiver_locate + "\n State :"+ Rstate + "\n Country :"+ Rcountry
 
     try {
-        db.query('INSERT INTO fasttrac.shipments SET ?', { user_id: userData.user_id, sender_name, sender_address, sender_phone, sender_phone2, receiver_name, transaction_code, receiver_address, receiver_phone, receiver_phone2, category, shipment_description, item_quantity, dimension,shipment_weight});
+        db.query('INSERT INTO bkew76jt01b1ylysxnzp.shipments SET ?', { user_id: userData.user_id, sender_name, sender_address, sender_phone, sender_phone2, receiver_name, transaction_code, receiver_address, receiver_phone, receiver_phone2, category, shipment_description, item_quantity, dimension,shipment_weight});
 
         res.json("Form Successfully Submitted")
     } catch (error) {
@@ -364,7 +366,7 @@ route.get('/shipments/:userId', UserLoggin, (req, res) => {
     
 
     const sql = `
-      SELECT * FROM fasttrac.shipments WHERE user_id = ?;
+      SELECT * FROM bkew76jt01b1ylysxnzp.shipments WHERE user_id = ?;
     `;
 
     db.query(sql, [userId], (err, results) => {
