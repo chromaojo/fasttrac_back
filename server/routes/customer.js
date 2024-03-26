@@ -26,16 +26,6 @@ route.use(express.json())
 
 
 
-route.get('/createDb', (req, res) => {
-    let sql = 'CREATE DATABASE bkew76jt01b1ylysxnzp';
-
-    db.query(sql, (err, result) => {
-        if (err) {
-            res.send('Database Creation Error');
-        }
-        res.send('A Database Created');
-    })
-})
 
 
 
@@ -44,7 +34,7 @@ route.get('/createTable', (req, res) => {
 
 
     const sqlUsers = `
-        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.users (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.ft_users (
         user_id INT PRIMARY KEY AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
@@ -53,7 +43,7 @@ route.get('/createTable', (req, res) => {
         `;
 
     const sqlAccounts = `
-        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.accounts (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.ft_accounts (
         account_id VARCHAR(255) UNIQUE PRIMARY KEY,
         account_balance INT DEFAULT 0,
         total_spent INT DEFAULT 0,
@@ -70,7 +60,7 @@ route.get('/createTable', (req, res) => {
         `;
 
     const sqlShipments = `
-        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.shipments (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.ft_shipments (
         shipment_id INT PRIMARY KEY AUTO_INCREMENT,
         user_id INT,
         FOREIGN KEY (user_id) REFERENCES users(user_id),
@@ -127,7 +117,7 @@ route.get('/createTable', (req, res) => {
 route.post('/register', (req, res) => {
     const { email, password, password1, surname, othername, username, address, phone_number } = req.body;
 
-    db.query('SELECT email FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [email], async (error, result) => {
+    db.query('SELECT email FROM bkew76jt01b1ylysxnzp.ft_users WHERE email = ?', [email], async (error, result) => {
         if (error) { console.log("Customized Error ", error); }
         if (result.length > 0) {
             return res.status(401).json({
@@ -135,7 +125,7 @@ route.post('/register', (req, res) => {
             })
         } else if (password == password1) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            db.query('INSERT INTO fasttrac.users SET ?', { email: email, password: hashedPassword, role: 'customer' }, (error, result) => {
+            db.query('INSERT INTO bkew76jt01b1ylysxnzp.ft_users SET ?', { email: email, password: hashedPassword, role: 'customer' }, (error, result) => {
                 if (error) {
                     console.log('A Registeration Error Occured ', error);
                 } else {
@@ -151,7 +141,7 @@ route.post('/register', (req, res) => {
                     // mail.sendIt(messages)
 
                     // To create the account table into the user 
-                    db.query('SELECT * FROM fasttrac.accounts WHERE email = ?', [email], async (error, result) => {
+                    db.query('SELECT * FROM bkew76jt01b1ylysxnzp.ft_accounts WHERE email = ?', [email], async (error, result) => {
                         if (error) {
 
                             return res.status(500).json({
@@ -159,7 +149,7 @@ route.post('/register', (req, res) => {
                             });
                         } else {
 
-                            db.query('SELECT * FROM fasttrac.users WHERE email = ?', [email], async (error, result) => {
+                            db.query('SELECT * FROM bkew76jt01b1ylysxnzp.ft_users WHERE email = ?', [email], async (error, result) => {
                                 if (error) {
 
                                     return res.status(500).json({
@@ -209,8 +199,8 @@ route.post('/login', async (req, res) => {
          a.username,
          a.address,
          a.email as account_email
-       FROM fasttrac.users u
-       LEFT JOIN fasttrac.accounts a ON u.user_id = a.user_id
+       FROM bkew76jt01b1ylysxnzp.ft_users u
+       LEFT JOIN bkew76jt01b1ylysxnzp.ft_accounts a ON u.user_id = a.user_id
        WHERE u.email = ?;
      `;
     db.query(sqlGetUserWithAccount, [email], async (error, result) => {
@@ -259,7 +249,7 @@ route.get('/dashboard', (req, res) => {
     if (!userCookie) {
         res.redirect('/login');
     } else {
-        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [userData.email], async (error, result) => {
+        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.ft_users WHERE email = ?', [userData.email], async (error, result) => {
 
             console.log('This is the dashboard Details : ', userData);
             if (error) {
