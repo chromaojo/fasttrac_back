@@ -30,7 +30,7 @@ route.get('/createTable', (req, res) => {
 
 
     const sqlUsers = `
-        CREATE TABLE IF NOT EXISTS fasttrac.users (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.users (
         user_id INT PRIMARY KEY AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
@@ -39,7 +39,7 @@ route.get('/createTable', (req, res) => {
         `;
 
     const sqlAccounts = `
-        CREATE TABLE IF NOT EXISTS fasttrac.accounts (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.accounts (
         account_id VARCHAR(255) UNIQUE PRIMARY KEY,
         account_balance INT DEFAULT 0,
         total_spent INT DEFAULT 0,
@@ -56,7 +56,7 @@ route.get('/createTable', (req, res) => {
         `;
 
     const sqlShipments = `
-        CREATE TABLE IF NOT EXISTS fasttrac.shipments (
+        CREATE TABLE IF NOT EXISTS bkew76jt01b1ylysxnzp.shipments (
         shipment_id INT PRIMARY KEY AUTO_INCREMENT,
         user_id INT,
         FOREIGN KEY (user_id) REFERENCES users(user_id),
