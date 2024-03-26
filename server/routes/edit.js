@@ -19,7 +19,7 @@ route.post('/surname', UserLoggin, async (req, res) => {
     if (surname) {
         try {
             const userData = req.app.get('userData');
-            let updateUsername = 'UPDATE fasttrac.accounts SET surname = ?  WHERE email = ?';
+            let updateUsername = 'UPDATE bkew76jt01b1ylysxnzp.ft_accounts SET surname = ?  WHERE email = ?';
             let values = [surname, userData.email];
 
             db.query(updateUsername, values, (error, result) => {
@@ -44,7 +44,7 @@ route.post('/surname', UserLoggin, async (req, res) => {
                 a.address,
                 a.email as account_email
             FROM fasttrac.users u
-            LEFT JOIN fasttrac.accounts a ON u.user_id = a.user_id
+            LEFT JOIN bkew76jt01b1ylysxnzp.ft_accounts a ON u.user_id = a.user_id
             WHERE u.email = ?;
             `;
                 db.query(sqlGetUserWithAccount, [userData.email], async (error, result) => {
@@ -87,7 +87,7 @@ route.post('/username', UserLoggin, async (req, res) => {
     if (username) {
         try {
             const userData = req.app.get('userData');
-            let updateUsername = 'UPDATE fasttrac.accounts SET username = ?  WHERE email = ?';
+            let updateUsername = 'UPDATE bkew76jt01b1ylysxnzp.ft_accounts SET username = ?  WHERE email = ?';
             let values = [username, userData.email];
 
             db.query(updateUsername, values, (error, result) => {
