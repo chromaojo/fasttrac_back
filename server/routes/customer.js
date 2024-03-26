@@ -272,7 +272,7 @@ route.get('/profile', UserLoggin, (req, res) => {
     if (!userCookie) {
         res.redirect('/login');
     } else {
-        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.users WHERE email = ?', [userData.email], async (error, result) => {
+        const user = db.query('SELECT * FROM bkew76jt01b1ylysxnzp.ft_users WHERE email = ?', [userData.email], async (error, result) => {
 
             // console.log('This is the dashboard Details : ', userData);
             if (error) {
@@ -337,7 +337,7 @@ route.post('/shipmen', UserLoggin, (req,res)=>{
     let receiver_address = receiver_locate + "\n State :"+ Rstate + "\n Country :"+ Rcountry
 
     try {
-        db.query('INSERT INTO bkew76jt01b1ylysxnzp.shipments SET ?', { user_id: userData.user_id, sender_name, sender_address, sender_phone, sender_phone2, receiver_name, transaction_code, receiver_address, receiver_phone, receiver_phone2, category, shipment_description, item_quantity, dimension,shipment_weight});
+        db.query('INSERT INTO bkew76jt01b1ylysxnzp.ft_shipments SET ?', { user_id: userData.user_id, sender_name, sender_address, sender_phone, sender_phone2, receiver_name, transaction_code, receiver_address, receiver_phone, receiver_phone2, category, shipment_description, item_quantity, dimension,shipment_weight});
 
         res.json("Form Successfully Submitted")
     } catch (error) {
@@ -356,7 +356,7 @@ route.get('/shipments/:userId', UserLoggin, (req, res) => {
     
 
     const sql = `
-      SELECT * FROM bkew76jt01b1ylysxnzp.shipments WHERE user_id = ?;
+      SELECT * FROM bkew76jt01b1ylysxnzp.tt_shipments WHERE user_id = ?;
     `;
 
     db.query(sql, [userId], (err, results) => {
