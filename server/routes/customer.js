@@ -25,6 +25,20 @@ route.use(
 route.use(express.json())
 
 
+
+route.get('/createDb', (req, res) => {
+    let sql = 'CREATE DATABASE bkew76jt01b1ylysxnzp';
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            res.send('Database Creation Error');
+        }
+        res.send('A Database Created');
+    })
+})
+
+
+
 // To create Table for user and Account 
 route.get('/createTable', (req, res) => {
 
