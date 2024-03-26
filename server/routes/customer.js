@@ -156,7 +156,7 @@ route.post('/register', (req, res) => {
                                         message: 'Internal Server Error'
                                     });
                                 } else {
-                                    db.query('INSERT INTO fasttrac.accounts SET ?', { user_id: result[0].user_id, email: email, account_id: rand, account_balance: 0, surname: surname, othername: othername, username: username, address: address, phone_number: phone_number });
+                                    db.query('INSERT INTO bkew76jt01b1ylysxnzp.ft_accounts SET ?', { user_id: result[0].user_id, email: email, account_id: rand, account_balance: 0, surname: surname, othername: othername, username: username, address: address, phone_number: phone_number });
                                 }
                             });
                         }
