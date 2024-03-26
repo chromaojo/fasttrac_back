@@ -36,7 +36,7 @@ route.get('/users', UserLoggin, (req, res) => {
     
 
     const sql = `
-      SELECT * FROM fasttrac.users;
+      SELECT * FROM bkew76jt01b1ylysxnzp.ft_users;
     `;
 
     db.query(sql, [userId], (err, results) => {
@@ -62,7 +62,7 @@ route.get('/users/:userId', UserLoggin, (req, res) => {
 
     // Retrieve user data from the database based on userId
     const sql = `
-      SELECT * FROM fasttrac.users WHERE user_id = ?;
+      SELECT * FROM bkew76jt01b1ylysxnzp.ft_users WHERE user_id = ?;
     `;
 
     db.query(sql, [userId], (err, results) => {
@@ -90,7 +90,7 @@ route.post('/users/:userId/edit', UserLoggin, (req, res) => {
 
     // Update user role in the database
     const sql = `
-      UPDATE fasttrac.users 
+      UPDATE bkew76jt01b1ylysxnzp.ft_users 
       SET role = ?
       WHERE user_id = ?;
     `;
@@ -114,7 +114,7 @@ route.get('/shipments/:userId', UserLoggin, (req, res) => {
     
 
     const sql = `
-      SELECT * FROM fasttrac.shipments WHERE user_id = ?;
+      SELECT * FROM bkew76jt01b1ylysxnzp.ft_shipmemts WHERE user_id = ?;
     `;
 
     db.query(sql, [userId], (err, results) => {
@@ -138,7 +138,7 @@ route.get('/shipments/:userId', UserLoggin, (req, res) => {
 route.get('/shipments', (req, res) => {
     const sql = `
         SELECT * 
-        FROM fasttrac.shipments;
+        FROM bkew76jt01b1ylysxnzp.ft_shipments;
     `;
 
     db.query(sql, (err, results) => {
